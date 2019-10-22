@@ -1,4 +1,4 @@
-package com.invertase.rnfirebasestarter;
+package com.tommydanielandi.clipvote;
 
 import androidx.multidex.MultiDexApplication;
 

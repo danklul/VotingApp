@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "272548039293",
+    "firebase_url": "https://torslandaik.firebaseio.com",
+    "project_id": "torslandaik",
+    "storage_bucket": "torslandaik.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272548039293:android:4a0b70413e3eb71fe2ff14",
+        "android_client_info": {
+          "package_name": "com.tommydanielandi.clipvote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272548039293-u4nrn86huooh9j825vabrrr3jgs82vao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tommydanielandi.clipvote",
+            "certificate_hash": "8247dbb90d575401a2f6f7600c56652c6f7cc15c"
+          }
+        },
+        {
+          "client_id": "272548039293-mquf3fkmo539j7slgvgi90oteq7vcl4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH-wqchhKsl4vJHeQgKrWS_jY3nyo52v0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272548039293-9r4bqk61ors58j25ihu51d673q3f23ig.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "272548039293-f98uu5ruuraf0u1uh4burv2jrjfpoqeo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tommydanielandi.clipvote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272548039293:android:bf71389c6e9dad17e2ff14",
+        "android_client_info": {
+          "package_name": "org.nativescript.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272548039293-mquf3fkmo539j7slgvgi90oteq7vcl4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH-wqchhKsl4vJHeQgKrWS_jY3nyo52v0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272548039293-9r4bqk61ors58j25ihu51d673q3f23ig.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "272548039293-f98uu5ruuraf0u1uh4burv2jrjfpoqeo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tommydanielandi.clipvote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
