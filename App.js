@@ -1,26 +1,26 @@
 
 import React from 'react';
 import HomeScreen from './components/HomeScreen'
-import  FirstVideoScreen  from './components/FirstVideoScreen';
+import  AddCreditScreen from './components/AddCreditScreen';
 import  SecondVideoScreen  from './components/SecondVideoScreen';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import {
   StyleSheet,
+  StatusBar,
   View,
-  Text,
-  ScrollView,
-  TouchableOpacity, 
-  PixelRatio,
-  Dimensions,
-  Platform,
-  Button,
-  Container,
+  
 } from 'react-native';
 
 export default class App extends React.Component {
   render() {
+    <StatusBar  
+            backgroundColor = "black"  
+            barStyle = "dark-content"   
+            hidden = {false}    
+            translucent = {true}  
+        />  
     return <AppContainer />;
   }
 }
@@ -29,8 +29,8 @@ const AppNavigator = createStackNavigator({
   HomeScreen: {
     screen: HomeScreen
   },
-  FirstVideoScreen: {
-    screen: FirstVideoScreen
+  AddCreditScreen: {
+    screen: AddCreditScreen
   },
   SecondVideoScreen: {
     screen: SecondVideoScreen
