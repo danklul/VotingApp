@@ -1,8 +1,6 @@
-
 import React from 'react';
-import YouTube, { YouTubeStandaloneIOS } from 'react-native-youtube';
+import YouTube from 'react-native-youtube';
 import firebase from 'react-native-firebase';
-
 
 import {
     StyleSheet,
@@ -12,13 +10,8 @@ import {
     StatusBar,
     TouchableOpacity,
     PixelRatio,
-    Dimensions,
-    Platform,
     Button,
-    Container,
-    WebView,
   } from 'react-native';
-
 
 
 export default class HomeScreen extends React.Component {
@@ -32,17 +25,41 @@ export default class HomeScreen extends React.Component {
         fullscreen: false,
         containerMounted: false,
         containerWidth: null,
-        videoId1: "eSLe4HuKuK0",
-        videoId2: "adzYW5DZoWs",
-
+        user: null,
+        usersRef: null,
+        credits: null,
     };
+    componentDidMount() {
+      this.setState({
+      });
+      this.setUserCredits()
+    }
+      setUserCredits()  {
+        var user = firebase.auth().currentUser;
+        const usersRef = firebase.firestore().collection('users').doc(user.uid)
+
+        usersRef.get()
+        .then((docSnapshot) => {
+          if (docSnapshot.exists) {
+            usersRef.onSnapshot((doc) => {
+              this.state.credits = JSON.stringify(doc.get("Credits"))
+              console.log(doc.data());
+            });
+          }
+      })
+
+      }
+    
     render() {
       return (
-       
+        
+   
         // Content view
         <ScrollView
+        
 
         style={styles.scrollViewContainer}
+        
         onLayout={({
           nativeEvent: {
             layout: { width },
@@ -53,21 +70,28 @@ export default class HomeScreen extends React.Component {
           if (this.state.containerWidth !== width)
             this.setState({ containerWidth: width });
         }}>
-        
+            <StatusBar  
+            backgroundColor = "black"  
+            barStyle = "dark-content"      
+            translucent = {true}  
+        />  
         {/* Header */}
         <View>
+             <Text style={styles.creditText}
+             onPress={() => this.props.navigation.navigate('AddCreditScreen')}>Credits: {this.state.credits} DOLLARS
+                
+             </Text>
+             
              <Text style={styles.appNameText}>Vote</Text>
+             
         </View>
-        <Text style={{color:'white', fontSize:20, justifyContent:'center',textAlign:'center' }}>
-            Teaser one</Text>
+        
         {this.state.containerMounted && (
-          
-     
           <YouTube
          
             
             apiKey="AIzaSyDprj26R2jpFDkZdthdDmauLdZfCsHoyGE"
-            videoId = {this.state.videoId1}
+            videoId="eSLe4HuKuK0"
           
             play={this.state.isPlaying}
             loop={this.state.isLooping}
@@ -96,24 +120,20 @@ export default class HomeScreen extends React.Component {
             }
           />
         )}
-        {/* Vote button text video 1 */}
-        
-        
         
         {/* Vote button 1 */}
-        <Button style={{marginTop:60}} 
+        <Button style={{}} 
             title='Submit vote'
-            onPress={() => this.props.navigation.navigate('FirstVideoScreen')}
+            // onPress={() => this.props.navigation.navigate('FirstVideoScreen')}
         />
-        
 
-        
         <View>
+        
         <YouTube
          
          apiKey="AIzaSyDprj26R2jpFDkZdthdDmauLdZfCsHoyGE"
    
-         videoId = {this.state.videoId2}
+         videoId="adzYW5DZoWs"
     
          play={this.state.isPlaying}
          loop={this.state.isLooping}
@@ -141,11 +161,27 @@ export default class HomeScreen extends React.Component {
            })
          }
        /> 
-        </View>
-  
-        
+       <Button style={{}} 
+            title='Submit vote'
+            onPress={() => this.props.navigation.navigate('SecondVideoScreen')}
+        />
 
+        </View>
+
+        <View>
+            <Text style={{fontSize:15,color:'white',marginTop:10, marginLeft:20,textDecorationLine:'underline',marginBottom:5}}>
+                Votes
+            </Text>
+            <Text style={{color:'white',marginLeft:20}}>
+                Video one: 4
+            </Text>
+            <Text style={{color:'white',marginLeft:20}}>
+                Video two: 6
+            </Text>
+        </View>
+        
       </ScrollView>
+      
     );
   }
 }
@@ -153,7 +189,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   scrollViewContainer: {
     backgroundColor: 'black',
-    
+
   },
   appNameText: {
     color: 'white',
@@ -163,141 +199,35 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     textDecorationLine: 'underline',
-    
+  },
+  creditText: {
+      color: 'white',
+      justifyContent: 'flex-end',
+      textAlign: 'right',
+      marginRight: 20,
+      marginTop: 5,
+
   },
   player: {
     alignSelf: 'stretch',
-    marginVertical: 10,
-    marginRight: 5,
-    marginLeft: 5,
+    marginVertical: 5,
+    marginRight: 25,
+    marginLeft: 25,
+    marginTop: 10,
+    marginBottom:10,
+    
   },
   voteButton: {
-      flex: 1,
       textAlign: 'center',
       justifyContent: 'center',
       color: 'white',
   },
-  voteText: {
-      color: 'black',
-      textAlign: 'center',
-      justifyContent: 'center',
-      fontSize: 30,
-  },
-  backgroundVideo: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-  },
+//   voteText: {
+//       color: 'black',
+//       textAlign: 'center',
+//       justifyContent: 'center',
+//       fontSize: 30,
+//   },
   
 });
-//        <ScrollView>
-         
-//         <View style= {[styles.box, styles.headerView]}>
-//                 <Text style={styles.appNameText}>Vote</Text>
-//         </View>
 
-//         <View style= {[styles.box, styles.videoView1]}>
- 
-//             onLayout={({
-//           nativeEvent: {
-//             layout: { width },
-//           },
-//         }) => {
-//           if (!this.state.containerMounted)
-//             this.setState({ containerMounted: true });
-//           if (this.state.containerWidth !== width)
-//             this.setState({ containerWidth: width });
-//         }}>
-//             {this.state.containerMounted && (
-//             <YouTube
-         
-         
-//             apiKey="AIzaSyDprj26R2jpFDkZdthdDmauLdZfCsHoyGE"
-           
-//             videoId="luto-PtL-Qk"
-            
-//             play={this.state.isPlaying}
-//             loop={this.state.isLooping}
-//             fullscreen={this.state.fullscreen}
-//             controls={1}
-//             style={[
-//               {
-//                 height: PixelRatio.roundToNearestPixel(
-//                   this.state.containerWidth / (16 / 9)
-//                 ),
-//               },
-//               styles.player,
-//             ]}
-//             onError={e => this.setState({ error: e.error })}
-//             onReady={e => this.setState({ isReady: true })}
-//             onChangeState={e => this.setState({ status: e.state })}
-//             onChangeQuality={e => this.setState({ quality: e.quality })}
-//             onChangeFullscreen={e =>
-//               this.setState({ fullscreen: e.isFullscreen })
-//             }
-//             onProgress={e =>
-//               this.setState({
-//                 duration: e.duration,
-//                 currentTime: e.currentTime,
-//               })
-//             }
-//           />
-//         )}
-//         </View>
-//             <View>
-//                 <Text>Vote on first Video</Text>
-//                 <Button 
-//                 title='Submit vote'
-//                 onPress={() => this.props.navigation.navigate('FirstVideoScreen')}
-//                 />
-//         </View>
-
-//         <View style={[styles.box, styles.videoView2]}>
-//                 <Text>Vote for this video</Text>
-//                 <Button 
-//                 title='Submit vote'
-//                 onPress={() => this.props.navigation.navigate('SecondVideoScreen')}
-//                 />
-//         </View>
-        
-//         </ScrollView>
-//       );
-//     }
-//   }
-
-
-//   const styles = StyleSheet.create({
-//       headerView: {
-//           textAlignVertical: 'center',
-//       },
-//       videoView1: {
-//           backgroundColor: 'lightgreen',
-          
-          
-//       },
-//       videoView2: {
-//           textAlignVertical: "bottom",
-//           backgroundColor: 'lightblue',
-          
-//       },
-//       appNameText: {
-//           color: 'black',
-//           textAlign: 'center',
-//           justifyContent: 'center',
-//           fontSize: 30,
-//       },
-//       container: {
-//           flex: 1,
-//           flexDirection: 'column',
-//           backgroundColor: 'white',
-//       },
-//       box: {
-//           height: box_height,
-//       },
-//       player: {
-//         alignSelf: 'stretch',
-//         marginVertical: 10,
-//       }
-// });
