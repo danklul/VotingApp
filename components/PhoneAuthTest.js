@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, Text, TextInput, Image } from 'react-native';
+import { View, Button, Text, TextInput, Image, Dimensions } from 'react-native';
 
 import firebase from 'react-native-firebase';
 
@@ -19,9 +19,15 @@ export default class PhoneAuthTest extends Component {
     };
   }
 
+
   componentDidMount() {
+    // this.signOut()
+    this.setState ({
+      user: null
+    })
     this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        this.getUserData()
         this.setState({ user: user.toJSON() });
       } else {
         // User has been signed out, reset the state
@@ -29,7 +35,7 @@ export default class PhoneAuthTest extends Component {
           user: null,
           message: '',
           codeInput: '',
-          phoneNumber: '+44',
+          phoneNumber: '+46',
           confirmResult: null,
         });
       }
@@ -45,7 +51,7 @@ export default class PhoneAuthTest extends Component {
     this.setState({ message: 'Sending code ...' });
 
     firebase.auth().signInWithPhoneNumber(phoneNumber)
-      .then(confirmResult => this.setState({ confirmResult, message: 'Code has been sent!' }))
+      .then(confirmResult => this.setState({ confirmResult, message: '' }))
       .catch(error => this.setState({ message: `Sign In With Phone Number Error: ${error.message}` }));
   };
 
@@ -56,7 +62,7 @@ export default class PhoneAuthTest extends Component {
       confirmResult.confirm(codeInput)
         .then((user) => {
           this.setState({ message: 'Code Confirmed!' });
-          this.getUserData()
+          
         })
         .catch(error => this.setState({ message: `Code Confirm Error: ${error.message}` }));
     }
@@ -68,18 +74,26 @@ export default class PhoneAuthTest extends Component {
 
   renderPhoneNumberInput() {
    const { phoneNumber } = this.state;
-
+   let dimensions = Dimensions.get("window");
+   let imageHeight = Math.round((dimensions.width * 3) / 16);
+   let imageWidth = dimensions.width;
     return (
-      <View style={{ padding: 25 }}>
-        <Text>Enter phone number:</Text>
+      
+      <View style={{flex:1, padding: 25, backgroundColor: 'black'}}>
+           <Image
+            style={{ height: imageHeight, width: imageWidth*0.75, marginTop: 20, marginBottom: 20, marginLeft: 20,
+              marginRight: 20, position:'relative'}}
+            source={require("../images/dizordat.png")}
+          />
+        <Text style={{ color:'orange'}}>Enter phone number:</Text>
         <TextInput
           autoFocus
-          style={{ height: 40, marginTop: 15, marginBottom: 15 }}
+          style={{ height: 40, marginTop: 15, marginBottom: 15, color:'orange'}}
           onChangeText={value => this.setState({ phoneNumber: value })}
           placeholder={'Phone number ... '}
           value={phoneNumber}
         />
-        <Button title="Sign In" color="green" onPress={this.signIn} />
+        <Button title="Sign Up" color="orange" onPress={this.signIn} />
       </View>
     );
   }
@@ -90,13 +104,13 @@ export default class PhoneAuthTest extends Component {
     if (!message.length) return null;
 
     return (
-      <Text style={{ padding: 5, backgroundColor: '#000', color: '#fff' }}>{message}</Text>
+      <Text style={{ padding: 1, backgroundColor: 'black', color: 'orange' }}>{message}</Text>
     );
   }
 
  getUserData() {
     var user = firebase.auth().currentUser;
-if (user != null) {
+    if (user != null) {
 
     const usersRef = firebase.firestore().collection('users').doc(user.uid)
     usersRef.get()
@@ -130,18 +144,26 @@ if (user != null) {
 
   renderVerificationCodeInput() {
     const { codeInput } = this.state;
+    let dimensions = Dimensions.get("window");
+    let imageHeight = Math.round((dimensions.width * 3) / 16);
+    let imageWidth = dimensions.width;
 
     return (
-      <View style={{ marginTop: 25, padding: 25 }}>
-        <Text>Enter verification code below:</Text>
+      <View style={{flex:1, marginTop: 25, padding: 25, backgroundColor: 'black'}}>
+           <Image
+            style={{ height: imageHeight, width: imageWidth*0.75, marginTop: 20, marginBottom: 20, marginLeft: 20,
+            marginRight: 20, position:'relative'}}
+            source={require("../images/dizordat.png")}
+          />
+        <Text style={{color:'orange'}}>Enter verification code below:</Text>
         <TextInput
           autoFocus
-          style={{ height: 40, marginTop: 15, marginBottom: 15 }}
+          style={{ height: 40, marginTop: 15, marginBottom: 15, color:'orange' }}
           onChangeText={value => this.setState({ codeInput: value })}
           placeholder={'Code ... '}
           value={codeInput}
         />
-        <Button title="Confirm Code" color="#841584" onPress={this.confirmCode} />
+        <Button title="Confirm Code" color="orange" onPress={this.confirmCode} />
       </View>
     );
   }
@@ -156,26 +178,25 @@ if (user != null) {
         {this.renderMessage()}
 
         {!user && confirmResult && this.renderVerificationCodeInput()}
-
+        
         {user && (
-          <View
-            style={{
-              padding: 15,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#77dd77',
-              flex: 1,
-            }}
-          >
-            <Image source={{ uri: successImageUri }} style={{ width: 100, height: 100, marginBottom: 25 }} />
-            <Text style={{ fontSize: 25 }}>Signed In!</Text>
-            <Text>{JSON.stringify(user)}</Text>
-            {/* <Button title="Get User Data" color="green" onPress={() => this.props.navigation.navigate('HomeScreen')} /> */}
-            <Button title="Go to home" color="blue" onPress={() => this.props.navigation.navigate('HomeScreen')} />
-            <Button title="Sign Out" color="red" onPress={this.signOut} />
-          </View>
-        )}
+          this.props.navigation.navigate('HomeScreen')
+    // <View
+    //   style={{
+    //     padding: 15,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //     backgroundColor: '#77dd77',
+    //     flex: 1,
+    //   }}
+    // >
+    //   <Image source={{ uri: successImageUri }} style={{ width: 100, height: 100, marginBottom: 25 }} />
+    //   <Text style={{ fontSize: 25 }}>Signed In!</Text>
+    //   <Button title="Go to home" color="blue" onPress={() => this.props.navigation.navigate('HomeScreen')} />
+    //   <Button title="Sign Out" color="red" onPress={this.signOut} />
+    //   </View>
+      )} 
       </View>
-    );
+     );
   }
 }

@@ -20,7 +20,7 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* ClipVoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ClipVoteTests.m */; };
 		66F583A38C047519D1E18159 /* libPods-ClipVote.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 599A1087F9C545123EFD61BE /* libPods-ClipVote.a */; };
-		A399237623604E090096916B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A399237523604E090096916B /* GoogleService-Info.plist */; };
+		A36A490C23607916000E4F8B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A36A490B23607916000E4F8B /* GoogleService-Info.plist */; };
 		ADDA258B0C3DE0261C60A364 /* libPods-ClipVote-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B23455DE3C4D5673E7318E /* libPods-ClipVote-tvOSTests.a */; };
 		CB23C3742761BB2944FDCE0B /* libPods-ClipVoteTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3AC53CF282E97E63953C49 /* libPods-ClipVoteTests.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
@@ -68,7 +68,7 @@
 		5C04F7E60E3774814827066E /* Pods-ClipVote-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClipVote-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ClipVote-tvOS/Pods-ClipVote-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7A230A0DEF48DF21D545AA71 /* Pods-ClipVote-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClipVote-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ClipVote-tvOS/Pods-ClipVote-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		9C3AC53CF282E97E63953C49 /* libPods-ClipVoteTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ClipVoteTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A399237523604E090096916B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A36A490B23607916000E4F8B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC301B00DE1F70B71BE4D317 /* Pods-ClipVoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClipVoteTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ClipVoteTests/Pods-ClipVoteTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA346B7E0D05342E8E702E1C /* Pods-ClipVote-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClipVote-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ClipVote-tvOSTests/Pods-ClipVote-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E36E327AAA5B4552B4028263 /* Pods-ClipVoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClipVoteTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ClipVoteTests/Pods-ClipVoteTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				A399237523604E090096916B /* GoogleService-Info.plist */,
+				A36A490B23607916000E4F8B /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* ClipVote */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ClipVoteTests */,
@@ -311,7 +311,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = YBUBK2DRJK;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = YBUBK2DRJK;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -359,7 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				A399237623604E090096916B /* GoogleService-Info.plist in Resources */,
+				A36A490C23607916000E4F8B /* GoogleService-Info.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				27760E91229B6FDF00F5F127 /* GoogleService-Info.plist in Resources */,
 			);
@@ -606,6 +610,7 @@
 			baseConfigurationReference = E36E327AAA5B4552B4028263 /* Pods-ClipVoteTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = YBUBK2DRJK;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -637,6 +642,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = YBUBK2DRJK;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
@@ -665,6 +671,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = YBUBK2DRJK;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
@@ -688,6 +695,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YBUBK2DRJK;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",

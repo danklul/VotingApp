@@ -11,11 +11,17 @@ import {
     TouchableOpacity,
     PixelRatio,
     Button,
+    Image,
+    Platform,
+    Dimensions,
   } from 'react-native';
 
 
 export default class HomeScreen extends React.Component {
-    state = {
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this)
+    this.state = {
         isReady: false,
         status: null,
         quality: null,
@@ -28,12 +34,57 @@ export default class HomeScreen extends React.Component {
         user: null,
         usersRef: null,
         credits: null,
+        votesVideo1: null,
+        votesVideo2: null,
     };
+    this.voteOnVideo1 = this.voteOnVideo1.bind(this);
+    this.voteOnVideo2 = this.voteOnVideo2.bind(this);
+  }
     componentDidMount() {
-      this.setState({
-      });
       this.setUserCredits()
+      this.setVotesVideo1()
+      this.setVotesVideo2()
+      this.setState({
+        isReady: false,
+        status: null,
+        quality: null,
+        error: null,
+        isPlaying: false,
+        isLooping: false,
+        fullscreen: false,
+        containerMounted: false,
+        containerWidth: null,
+        user: null,
+        usersRef: null,
+        credits: null,
+        votesVideo1: null,
+        votesVideo2: null,
+      });
+      
     }
+    componentWillMount() {
+      this.setUserCredits()
+      this.setVotesVideo1()
+      this.setVotesVideo2()
+    }
+    // componentWillUnmount() {
+    //    firebase.auth().signOut();
+    // }
+
+    onChange(state) {
+      this.setState(state)
+      this.setVotesVideo1()
+      this.setVotesVideo2()
+      
+    }
+
+
+    // shouldComponentUpdate(nextProps) {
+    //   const differentCredits = this.props.credits !== nextProps.credits;
+    //   const differentVotes1 = this.props.votesVideo1 !== nextProps.votesVideo1;
+    //   const differentVotes2 = this.props.votesVideo2 !== nextProps.votesVideo2;
+    //   return differentCredits || differentVotes1 || differentVotes2;
+    // }
       setUserCredits()  {
         var user = firebase.auth().currentUser;
         const usersRef = firebase.firestore().collection('users').doc(user.uid)
@@ -47,20 +98,100 @@ export default class HomeScreen extends React.Component {
             });
           }
       })
-
       }
 
-      voteOnVideo() {
+      setVotesVideo1() {
+        var video1 = firebase.firestore().collection('videoclips').doc('videoclip1');
+      video1.get()
+        .then((docSnapshot) => {
+          if (docSnapshot.exists) {
+            video1.onSnapshot((doc) => {
+              this.state.votesVideo1 = JSON.stringify(doc.get("votes"))
+              console.log(doc.data());
+            });
+          }
+      })
+      }
+      
+      setVotesVideo2() {
+        var video2 = firebase.firestore().collection('videoclips').doc('videoclip2');
+        video2.get()
+        .then((docSnapshot) => {
+          if (docSnapshot.exists) {
+            video2.onSnapshot((doc) => {
+              this.state.votesVideo2 = JSON.stringify(doc.get("votes"))
+              console.log(doc.data());
+            });
+          }
+      })
+      }
+
+    async voteOnVideo1() {
         
+        var user = firebase.auth().currentUser;
+        const usersRef = firebase.firestore().collection('users').doc(user.uid)
+        var video1 = firebase.firestore().collection('videoclips').doc('videoclip1');
+      video1.update({
+          votes: firebase.firestore.FieldValue.increment(1)
+      })
+      usersRef.update({
+        Credits: firebase.firestore.FieldValue.increment(-1)
+    })
+    video1.get()
+    .then((docSnapshot) => {
+      if (docSnapshot.exists) {
+        video1.onSnapshot((doc) => {
+          this.setState({
+            votesVideo1: JSON.stringify(doc.get("votes")),
+           });
+          console.log(doc.data());
+        });
+      }
+  })
+   
+      }
+
+     async voteOnVideo2() {
+        var user = firebase.auth().currentUser;
+        const usersRef = firebase.firestore().collection('users').doc(user.uid)
+        var video2 = firebase.firestore().collection('videoclips').doc('videoclip2');
+       video2.update({
+        votes: firebase.firestore.FieldValue.increment(1)
+      })
+       usersRef.update({
+        Credits: firebase.firestore.FieldValue.increment(-1)
+    })
+    video2.get()
+    .then((docSnapshot) => {
+      if (docSnapshot.exists) {
+        video2.onSnapshot((doc) => {
+          this.setState({
+           votesVideo2: JSON.stringify(doc.get("votes")),
+          });
+          console.log(doc.data());
+        });
+      }
+    })
+    
+      }
+
+      signOut = () => {
+        firebase.auth().signOut();
+        this.props.navigation.navigate('PhoneAuthTest')
       }
     
     render() {
+
+      let dimensions = Dimensions.get("window");
+      let imageHeight = Math.round((dimensions.width * 4) / 16);
+      let imageWidth = dimensions.width;
+
       return (
         
    
         // Content view
         <ScrollView
-        
+      
 
         style={styles.scrollViewContainer}
         
@@ -81,16 +212,16 @@ export default class HomeScreen extends React.Component {
         />  
         {/* Header */}
         <View>
-             <Text style={styles.creditText}
-             onPress={() => this.props.navigation.navigate('AddCreditScreen')}>Credits: {this.state.credits} DOLLARS
-                
-             </Text>
-             
-             <Text style={styles.appNameText}>Vote</Text>
+             <Image
+            style={{ height: imageHeight, width: imageWidth, marginTop: 20, marginBottom: 20}}
+            source={require("../images/dizordat.png")}
+          />
+ 
              
         </View>
         
         {this.state.containerMounted && (
+        <View style={{}}>
           <YouTube
          
             
@@ -123,14 +254,16 @@ export default class HomeScreen extends React.Component {
               })
             }
           />
+          </View>
         )}
         
         {/* Vote button 1 */}
-        <Button style={{}} 
-            title='Submit vote'
-            // onPress={() => this.props.navigation.navigate('FirstVideoScreen')}
+        <Button
+            title='Vote'
+           onPress={this.voteOnVideo1}
+           color='orange'
         />
-
+       
         <View>
         
         <YouTube
@@ -165,23 +298,32 @@ export default class HomeScreen extends React.Component {
            })
          }
        /> 
-       <Button style={{}} 
-            title='Submit vote'
-            onPress={() => this.props.navigation.navigate('SecondVideoScreen')}
+       <Button
+            title='Vote'
+            onPress={this.voteOnVideo2}
+            color='orange'
         />
 
         </View>
 
         <View>
-            <Text style={{fontSize:15,color:'white',marginTop:10, marginLeft:20,textDecorationLine:'underline',marginBottom:5}}>
+        <Text style={{fontSize:15,color:'orange',marginTop:10, marginLeft:20,textDecorationLine:'underline',marginBottom:5}}
+             onPress={() => this.props.navigation.navigate('AddCreditScreen')}>
+             Credits left: {this.state.credits}
+             </Text>
+            <Text style={{fontSize:15,color:'orange',marginTop:10, marginLeft:20,textDecorationLine:'underline',marginBottom:5}}>
                 Votes
             </Text>
-            <Text style={{color:'white',marginLeft:20}}>
-                Video one: 4
+            <Text style={{color:'orange',marginLeft:20}}>
+                Video one: {this.state.votesVideo1} 
             </Text>
-            <Text style={{color:'white',marginLeft:20}}>
-                Video two: 6
+            <Text style={{color:'orange',marginLeft:20}}>
+                Video two: {this.state.votesVideo2}
             </Text>
+            <Button style={{marginTop: 50}}
+             title="Sign out"
+          color="orange"
+          onPress={this.signOut}></Button>
         </View>
         
       </ScrollView>
@@ -205,7 +347,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   creditText: {
-      color: 'white',
+      color: 'orange',
       justifyContent: 'flex-end',
       textAlign: 'right',
       marginRight: 20,
@@ -224,7 +366,7 @@ const styles = StyleSheet.create({
   voteButton: {
       textAlign: 'center',
       justifyContent: 'center',
-      color: 'white',
+      color: 'orange',
   },
 //   voteText: {
 //       color: 'black',

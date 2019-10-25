@@ -5,7 +5,7 @@ import  SecondVideoScreen  from './components/SecondVideoScreen';
 import PhoneAuthTest from './components/PhoneAuthTest';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-
+import firebase from 'react-native-firebase';
 import {
   StyleSheet,
   StatusBar,
@@ -14,6 +14,10 @@ import {
 } from 'react-native';
 
 export default class App extends React.Component {
+
+  // componentDidMount() {
+  //   firebase.auth().signOut();
+  // }
   render() {
     <StatusBar  
             backgroundColor = "black"  
@@ -39,6 +43,7 @@ const AppNavigator = createStackNavigator({
     screen: PhoneAuthTest
   }
 },{
+    headerMode: 'none',
     initialRouteName: 'PhoneAuthTest'
   });
 
